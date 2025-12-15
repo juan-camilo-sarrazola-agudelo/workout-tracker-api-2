@@ -1,11 +1,32 @@
-const { port } = require('./config/env'); // Import the port from the env file
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 8000;
 
-// Inicializacion del servidor y primera ruta
-app.get("/", (req, res) => {
-  res.send("Hola mi server en Express");
+// 1. Middlewares (Necesarios para leer JSON)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// 2. Importar Rutas
+const userRoutes = require('./routes/userRoutes');
+const workoutRoutes = require('./routes/workoutRoutes');
+const exerciseRoutes = require('./routes/exerciseRoutes');
+
+// 3. Usar las Rutas
+app.use('/api/users', userRoutes);
+app.use('/api/workouts', workoutRoutes);
+app.use('/api/exercises', exerciseRoutes);
+
+// 4. Ruta base para probar que el servidor vive
+app.get('/', (req, res) => {
+    res.send('API Workout Tracker funcionando correctamente 🚀');
 });
 
-// Inicio del servidor
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
+// 5. Manejo de errores 404 (Ruta no encontrada)
+app.use((req, res) => {
+    res.status(404).json({ error: 'Endpoint no encontrado' });
+});
+
+// 6. Iniciar Servidor
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
