@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // 2. Importar Rutas
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/users.routes');
 const workoutRoutes = require('./routes/workoutRoutes');
 const exerciseRoutes = require('./routes/exerciseRoutes');
 

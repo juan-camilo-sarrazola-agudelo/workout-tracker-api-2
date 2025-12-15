@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 let users = [
-    { id: 1, name: 'Carlos', email: 'carlos@mail.com' },
-    { id: 2, name: 'Ana', email: 'ana@mail.com' }
+    { id: 1, name: 'juan', email: 'juan@mail.com' },
+    { id: 2, name: 'camilo', email: 'camilo@mail.com' }
 ];
 
 router.get('/', (req, res) => {
