@@ -1,15 +1,32 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
-// Middlewares base
+// 1. Middlewares (Necesarios para leer JSON)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Rutas
+// 2. Importar Rutas
 const userRoutes = require('./routes/userRoutes');
-app.use('/api/users', userRoutes);
+const workoutRoutes = require('./routes/workoutRoutes');
+const exerciseRoutes = require('./routes/exerciseRoutes');
 
+// 3. Usar las Rutas
+app.use('/api/users', userRoutes);
+app.use('/api/workouts', workoutRoutes);
+app.use('/api/exercises', exerciseRoutes);
+
+// 4. Ruta base para probar que el servidor vive
+app.get('/', (req, res) => {
+    res.send('API Workout Tracker funcionando correctamente 🚀');
+});
+
+// 5. Manejo de errores 404 (Ruta no encontrada)
+app.use((req, res) => {
+    res.status(404).json({ error: 'Endpoint no encontrado' });
+});
+
+// 6. Iniciar Servidor
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
