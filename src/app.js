@@ -1,11 +1,15 @@
-const { port } = require('./config/env'); // Import the port from the env file
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Inicializacion del servidor y primera ruta
-app.get("/", (req, res) => {
-  res.send("Hola mi server en Express");
-});
+// Middlewares base
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Inicio del servidor
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
+// Rutas
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/users', userRoutes);
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
