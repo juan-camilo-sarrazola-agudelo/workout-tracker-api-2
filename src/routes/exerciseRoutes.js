@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-let exercises = [ { id: 1, name: 'Push Up', muscle: 'Chest' } ];
+let exercises = [{ id: 1, name: 'Push Up', muscle: 'Chest' }];
 
 router.get('/', (req, res) => {
     const { muscle } = req.query;
     if (muscle) {
-        const filtered = exercises.filter(e => e.muscle.toLowerCase() === muscle.toLowerCase());
+        const filtered = exercises.filter(
+            e => e.muscle.toLowerCase() === muscle.toLowerCase()
+        );
         return res.status(200).json(filtered);
     }
     res.status(200).json(exercises);
